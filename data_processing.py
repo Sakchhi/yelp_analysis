@@ -27,7 +27,6 @@ def create_reviews_df():
         #     print(pd.DataFrame(list(rev.items())))
     finally:
         # fp.close()
-        pass
     print(df_reviews)
     print(d.head())
 
