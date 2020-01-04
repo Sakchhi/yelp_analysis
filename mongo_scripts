@@ -1,0 +1,22 @@
+### Script to Read Restaurant Business Ids
+    var file = cat('path_to_file/20200104_Yelp_all_business_ids.csv');  // read the file
+    var biz_ids = file.split('\n'); // create an array of words
+    for (var i = 0, l = biz_ids.length; i < l; i++){ // for every word insert it in the collection
+        db.restaurant_ids.insert({'biz_ids': biz_ids[i]}); 
+    }
+
+
+### Script to write all the reviews for Restaurant Businesses to a new Collection
+    db.review.aggregate({
+    $lookup: {from: "restaurant_ids",
+              localField: "business id",
+              foreignField: "biz_ids",
+              as: "rest_id"
+              }}, {
+    $out: "restaurant_reviews"})
+
+
+### Script to export restaurant reviews collection to csv
+    mongoexport --db yelp --collection restaurant_reviews --type csv 
+    --out yelp_restaurant_reviews 
+    --fields review_id,user_id,business_id,stars,useful,funny,cool,text,date

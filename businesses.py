@@ -2,17 +2,10 @@ import pandas as pd
 import json
 
 
-def get_business_data():
-    stop = 1000000
-
-    ifile = open('Data/business.json')
+def get_business_data(file_name_business_data):
+    fp = open('Data/business.json')
     all_data = list()
-    for i, line in enumerate(ifile):
-        if i % 10000 == 0:
-            print(i)
-        if i == stop:
-            break
-            # convert the json on this line to a dict
+    for line in fp:
         data = json.loads(line)
         # extract what we want
         business_id = data['business_id']
@@ -33,24 +26,30 @@ def get_business_data():
         all_data.append([business_id, name, address, city, state, postal_code, latitude,
                          longitude, stars, review_count, is_open, attributes, categories,
                          hours])
+    fp.close()
     # create the DataFrame
     df = pd.DataFrame(all_data, columns=['business_id', 'name', 'address', 'city', 'state', 'postal_code', 'latitude',
                                          'longitude', 'stars', 'review_count', 'is_open', 'attributes', 'categories',
                                          'hours'])
 
-    df.to_excel('Yelp_all_businesses.xlsx', index=False)
+    df.to_excel(file_name_business_data, index=False)
 
 
-restaurant_biz_ids = []
-def filter_restaurants(row):
-    if not row[-2]:
-        if ("restaurants" in row[-2].lower()) or ("restaurant" in row[-2].lower()):
-            print(row[0])
+def get_restaurants(raw_data_file, file_name_restaurant):
+    df_raw = pd.read_excel(raw_data_file)
+    restaurant_biz_ids = []
+    restaurant_num_comments = []
+    for i in range(len(df_raw)):
+        if type(df_raw.iloc[i][-2]) != float:
+            if ("restaurants" in df_raw.iloc[i][-2].lower()) or ("restaurant" in df_raw.iloc[i][-2].lower()):
+                restaurant_biz_ids.append(df_raw.iloc[i][0])
+                restaurant_num_comments.append(df_raw.iloc[i][-5])
+    pd.DataFrame({'business_id': restaurant_biz_ids, 'num_comments': restaurant_num_comments}).to_excel(
+        file_name_restaurant, index=False)
 
 
-def get_restaurants():
-    df_raw = pd.read_excel('Yelp_all_businesses.xlsx')
-    print(df_raw.iloc[1][-2])
-
-if __name__=='__main__':
-    get_restaurants()
+if __name__ == '__main__':
+    file_name = '20200104_Yelp_all_businesses.xlsx'
+    restaurant_file_name = '20200104_Yelp_restaurant_business.xlsx'
+    get_business_data(file_name)
+    get_restaurants(file_name, restaurant_file_name)
