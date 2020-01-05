@@ -7,13 +7,12 @@
 
 
 ### Script to write all the reviews for Restaurant Businesses to a new Collection
-    db.review.aggregate({
-    $lookup: {from: "restaurant_ids",
-              localField: "business id",
-              foreignField: "biz_ids",
-              as: "rest_id"
-              }}, {
-    $out: "restaurant_reviews"})
+    db.review.aggregate([{
+                        $match: {business_id : 
+                                                {$in : db.restaurant_ids.distinct("biz_ids")}
+                                 }
+                          }, {
+    $out: "restaurant_reviews"}])
 
 
 ### Script to export restaurant reviews collection to csv
