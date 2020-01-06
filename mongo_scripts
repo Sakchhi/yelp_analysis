@@ -1,3 +1,9 @@
+### Script to upload json file to mongo collection
+    cd /path_to_file
+    use yelp
+    mongoimport --db yelp --collection review review.json
+
+
 ### Script to Read Restaurant Business Ids
     var file = cat('path_to_file/20200104_Yelp_all_business_ids.csv');  // read the file
     var biz_ids = file.split('\n'); // create an array of words
