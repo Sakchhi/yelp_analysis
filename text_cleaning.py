@@ -86,12 +86,11 @@ def chunk_preprocessing(df_chunk):
     df_chunk.drop('Unnamed: 0', axis=1, inplace=True)
     df_chunk.set_index('review_id', inplace=True)
 
-    # df_chunk['clean_text'] = df_chunk.text.apply(remove_accented_chars)
-    df_chunk['clean_text'] = df_chunk.text.apply(expand_contractions)
+    df_chunk['clean_text'] = df_chunk.text.astype(str).apply(remove_accented_chars)
+    df_chunk['clean_text'] = df_chunk.clean_text.apply(expand_contractions)
     df_chunk.clean_text = df_chunk.clean_text.apply(remove_special_characters)
 
     df_chunk['full_text_cleaned'] = df_chunk.clean_text.apply(clean_text)
-    print(df_chunk.columns)
     df_chunk['full_text_cleaned_text'] = df_chunk.apply(lambda r: ' '.join(r[-1]), axis=1)
 
     return df_chunk
@@ -105,4 +104,4 @@ if __name__ == '__main__':
         processed_data.append(processed_chunk)
         print(25000 * (i + 1))
     df_concat = pd.concat(processed_data)
-    df_concat.to_excel('yelp_restaurant_reviewes_cleaned_gr1000.xlsx')
+    df_concat.to_csv('yelp_restaurant_reviewes_cleaned_gr1000.csv')
