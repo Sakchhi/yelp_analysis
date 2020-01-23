@@ -69,7 +69,7 @@ def clean_text(text):
         text = [w.strip(string.punctuation) for w in text]
         text = [w for w in text if not any(c.isdigit() for c in w)]
         pos_tags = pos_tag(text)
-        text = [WordNetLemmatizer().lemmatize(t[0], get_wordnet_pos(t[1])) for t in pos_tags]
+        # text = [WordNetLemmatizer().lemmatize(t[0], get_wordnet_pos(t[1])) for t in pos_tags]
         text = [w.lower() for w in text]
         stop = stopwords.words("english")
         text = [w for w in text if w not in stop]
