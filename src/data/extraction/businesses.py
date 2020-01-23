@@ -35,7 +35,7 @@ def get_business_data(file_name_business_data):
                                          'longitude', 'stars', 'review_count', 'is_open', 'attributes', 'categories',
                                          'hours'])
 
-    # df.to_excel(file_name_business_data, index=False)
+    df.to_excel(file_name_business_data, index=False)
 
 
 def get_restaurants(raw_data_file, file_name_restaurant):
@@ -47,8 +47,8 @@ def get_restaurants(raw_data_file, file_name_restaurant):
             if ("restaurants" in df_raw.iloc[i][-2].lower()) or ("restaurant" in df_raw.iloc[i][-2].lower()):
                 restaurant_biz_ids.append(df_raw.iloc[i][0])
                 restaurant_num_comments.append(df_raw.iloc[i][-5])
-    pd.DataFrame({'business_id': restaurant_biz_ids, 'num_comments': restaurant_num_comments})  # .to_excel(
-    # file_name_restaurant, index=False)
+    pd.DataFrame({'business_id': restaurant_biz_ids, 'num_comments': restaurant_num_comments}).to_excel(os.path.join(
+        config.DATA_DIR, 'raw/extracted/ids', file_name_restaurant), index=False)
 
 
 if __name__ == '__main__':

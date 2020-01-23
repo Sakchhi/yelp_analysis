@@ -16,4 +16,4 @@ if __name__ == '__main__':
     print(df_biz.columns.tolist())
     df_merge = merge_business_data(df_reviews, df_biz)
     print(df_reviews.shape, df_biz.shape, df_merge.shape)
-    # df_merge.to_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, 'yelp_merged_reviews_gr1000.csv'))
+    df_merge.to_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, 'yelp_merged_reviews_gr1000.csv'))

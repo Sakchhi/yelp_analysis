@@ -100,8 +100,7 @@ def chunk_preprocessing(df_chunk):
 
 
 if __name__ == '__main__':
-    df_raw = pd.read_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, "yelp_merged_reviews_gr1000.csv"), nrows=50000,
-                         chunksize=25000)
+    df_raw = pd.read_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, "yelp_merged_reviews_gr1000.csv"), chunksize=25000)
     processed_data = []
     for i, chunk in enumerate(df_raw):
         processed_chunk = chunk_preprocessing(chunk)
@@ -109,4 +108,4 @@ if __name__ == '__main__':
         print(25000 * (i + 1))
     df_concat = pd.concat(processed_data)
     df_concat.to_csv(
-        os.path.join(config.DATA_DIR, 'processed/preprocess', 'yelp_restaurant_reviewes_cleaned_gr1000.csv'))
+        os.path.join(config.DATA_DIR, 'processed/preprocess', 'yelp_restaurant_reviews_cleaned_gr1000.csv'))
