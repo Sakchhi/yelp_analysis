@@ -13,7 +13,7 @@ def train_lda(train_corpus4):
 
 
 if __name__ == '__main__':
-    df_raw = pd.read_csv("yelp_restaurant_reviewes_cleaned_gr1000.csv", nrows=25000)
+    df_raw = pd.read_csv("yelp_restaurant_reviews_cleaned_gr1000.csv", nrows=25000)
     train_lda(df_raw.full_text_cleaned_text)
 
     print()

@@ -6,13 +6,11 @@ import json
 import string
 import unicodedata
 from nltk import pos_tag
-from nltk.corpus import wordnet, stopwords, words
-from nltk.tokenize import WhitespaceTokenizer
-from nltk.stem import WordNetLemmatizer
-# from nltk.stem.snowball import SnowballStemmer
+from nltk.corpus import wordnet, stopwords
 import re
-from pprint import pprint
-import matplotlib.pyplot as plt
+import spacy
+
+nlp = spacy.load('en')
 
 with open(os.path.join(config.UTILITIES_DIR, 'contraction_map.json')) as f:
     contraction_map = json.load(f)
@@ -100,12 +98,8 @@ def chunk_preprocessing(df_chunk):
 
 
 if __name__ == '__main__':
-    df_raw = pd.read_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, "yelp_merged_reviews_gr1000.csv"), chunksize=25000)
-    processed_data = []
-    for i, chunk in enumerate(df_raw):
-        processed_chunk = chunk_preprocessing(chunk)
-        processed_data.append(processed_chunk)
-        print(25000 * (i + 1))
-    df_concat = pd.concat(processed_data)
-    df_concat.to_csv(
-        os.path.join(config.DATA_DIR, 'processed/preprocess', 'yelp_restaurant_reviews_cleaned_gr1000.csv'))
+    df_raw = pd.read_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, "yelp_merged_reviews_gr1000.csv"), nrows=10000)
+
+    df_processed = chunk_preprocessing(df_raw.copy())
+    df_processed.to_csv(
+        os.path.join(config.DATA_DIR, 'processed/preprocess', 'yelp_restaurant_reviews_cleaned_gr1000_10k.csv'))
