@@ -58,6 +58,11 @@ if __name__ == '__main__':
     misc_notes = ""
     fields = [run_config.model_version_to_write, accuracy_score, fpr, f1,
               preprocessing_notes, feature_notes, model_notes, misc_notes]
-    with open(r'results_summary.csv', 'a') as f:
+    with open(os.path.join(config.LOGS_DIR, r'results_summary.csv'), 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(fields)
+        # writer = csv.DictWriter(f, fieldnames=columns)
+        # writer.writerow({columns[0]: fields[0], columns[1]: fields[1],
+        #                  columns[2]: fields[2], columns[3]: fields[3],
+        #                  columns[4]: fields[4], columns[5]: fields[5],
+        #                  columns[6]: fields[6], columns[7]: fields[7]})

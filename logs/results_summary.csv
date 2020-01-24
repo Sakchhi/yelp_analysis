@@ -1,1 +1,3 @@
-Run,Accuracy,FPR,F1 Score,Preprocessing,Feature,Model,Notes
+0.3,0.8735,0.08368495077355836,0.9115075201119271,"Snowball Stemmer, wordninja",BoW,MNB,
+0.3,0.872,0.08579272477693892,0.9123287671232877,"Snowball Stemmer, wordninja",BoW,MNB,
+0.3,0.868,0.0935593220338983,0.9101429543907421,"Snowball Stemmer, wordninja",BoW,MNB,
