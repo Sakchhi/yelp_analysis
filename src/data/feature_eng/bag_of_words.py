@@ -22,11 +22,12 @@ def get_bow(data):
 
 
 if __name__ == '__main__':
-    df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT, "yelp_restaurant_reviews_cleaned_gr1000.csv"),
-                         nrows=10000)
-    train_length = df_raw.shape[0]
+    df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT, "{}_yelp_restaurant_reviews_cleaned_gr1000_10k_v{"
+                                                                   "}.csv".format(run_config.model_date_to_read,
+                                                                                  run_config.model_version_to_read)))
+    # train_length = df_raw.shape[0]
     df_raw.full_text_cleaned_text.fillna('', inplace=True)
-    print(df_raw.columns, train_length)
+    print(df_raw.columns)
 
     count_vec_model, df_bow = get_bow(df_raw.full_text_cleaned_text.tolist())
     print(df_bow.head())
@@ -34,9 +35,8 @@ if __name__ == '__main__':
                                                    "feature_eng_model/{}_bag_of_words__10k_v{}.pickle".format(
                                                        run_config.model_date_to_write,
                                                        run_config.model_version_to_write)), 'wb'))
-    df_bow_train = df_bow.loc[:(train_length - 1)]
-    df_bow_test = df_bow.loc[train_length:]
-    print(df_bow_train.shape, df_bow_test.shape, df_raw.shape)
-    df_bow_train.to_csv(
+
+    print(df_raw.shape, )
+    df_bow.to_csv(
         os.path.join(config.DATA_DIR, 'processed/feature_engineering/{}_bag_of_words_10k_v{}.csv'.format(
             run_config.model_date_to_write, run_config.model_version_to_write)), index=False)
