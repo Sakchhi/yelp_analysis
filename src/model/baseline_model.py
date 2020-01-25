@@ -29,8 +29,8 @@ if __name__ == '__main__':
     df_bow = pd.read_csv(file_to_read)
     print(df_bow.columns.tolist())
     df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT,
-                                      "{}_yelp_restaurant_reviews_cleaned_gr1000_10k_v{}.csv".format(
-                                          run_config.model_date_to_read, run_config.model_version_to_read)))
+                                      "20200124_yelp_restaurant_reviews_cleaned_gr1000_10k_v0.3.csv"))  # .format(
+    # run_config.model_date_to_read, run_config.model_version_to_read)))
     print(df_raw.columns.tolist())
     df_feature = df_bow.copy()
     df_feature['label_rating'] = df_raw.stars_x.apply(lambda r: int(r > 3))
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     columns = ['Run', 'Accuracy', 'FPR', 'F1 Score', 'Preprocessing', 'Feature', 'Model', 'Notes']
     preprocessing_notes = "Snowball Stemmer, wordninja"
-    feature_notes = "BoW"
+    feature_notes = "BoW 2-gram -- Max features 5k"
     model_notes = "MNB"
     misc_notes = ""
     fields = [run_config.model_version_to_write, accuracy_score, fpr, f1,
@@ -61,8 +61,3 @@ if __name__ == '__main__':
     with open(os.path.join(config.LOGS_DIR, r'results_summary.csv'), 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(fields)
-        # writer = csv.DictWriter(f, fieldnames=columns)
-        # writer.writerow({columns[0]: fields[0], columns[1]: fields[1],
-        #                  columns[2]: fields[2], columns[3]: fields[3],
-        #                  columns[4]: fields[4], columns[5]: fields[5],
-        #                  columns[6]: fields[6], columns[7]: fields[7]})

@@ -1,3 +1,4 @@
-0.3,0.8735,0.08368495077355836,0.9115075201119271,"Snowball Stemmer, wordninja",BoW,MNB,
-0.3,0.872,0.08579272477693892,0.9123287671232877,"Snowball Stemmer, wordninja",BoW,MNB,
-0.3,0.868,0.0935593220338983,0.9101429543907421,"Snowball Stemmer, wordninja",BoW,MNB,
+Run,Accuracy,FPR,F1 Score,Preprocessing,Feature,Model,Notes
+0.3,0.87,0.084312370421562,0.910652920962199,"Snowball Stemmer, wordninja",BoW,MNB,
+0.4,0.8655,0.09824561403508772,0.9052483268756605,"Snowball Stemmer, wordninja",BoW -- Max features 5k,MNB,
+0.5,0.8745,0.09619238476953908,0.9151166723030097,"Snowball Stemmer, wordninja",BoW 2-gram -- Max features 5k,MNB,

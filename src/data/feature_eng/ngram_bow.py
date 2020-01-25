@@ -1,15 +1,12 @@
-import os
-import pickle
-
 import pandas as pd
+import os
+import config, run_config
+import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 
-import config
-import run_config
 
-
-def get_bow(data):
-    count = CountVectorizer(max_features=5000)
+def get_ngram(data):
+    count = CountVectorizer(max_features=10000, ngram_range=(1, 2))
     count.fit(data)
     bag_of_words = count.transform(data)
     bow_df = pd.DataFrame(bag_of_words.toarray(), columns=count.get_feature_names())
@@ -22,14 +19,15 @@ def get_bow(data):
 
 
 if __name__ == '__main__':
-    df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT, "{}_yelp_restaurant_reviews_cleaned_gr1000_10k_v{"
-                                                                   "}.csv".format(run_config.model_date_to_read,
-                                                                                  run_config.model_version_to_read)))
+    df_raw = pd.read_csv(
+        os.path.join(config.CLEANED_REVIEWS_ROOT, "20200124_yelp_restaurant_reviews_cleaned_gr1000_10k_v0.3.csv"))
+    # "}.csv".format(run_config.model_date_to_read,
+    #                run_config.model_version_to_read)))
     # train_length = df_raw.shape[0]
     df_raw.full_text_cleaned_text.fillna('', inplace=True)
     print(df_raw.columns)
 
-    count_vec_model, df_bow = get_bow(df_raw.full_text_cleaned_text.tolist())
+    count_vec_model, df_bow = get_ngram(df_raw.full_text_cleaned_text.tolist())
     print(df_bow.head())
     pickle.dump(count_vec_model, open(os.path.join(config.MODEL_DIR,
                                                    "feature_eng_model/{}_bag_of_words__10k_v{}.pickle".format(
