@@ -1,22 +1,22 @@
 import os
 import pickle
-import csv
 
 import pandas as pd
 from sklearn import metrics
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+import csv
 
 import config
 import run_config
 
 
 def get_predictions(train_data, train_labels, test_data):
-    mnb_model = MultinomialNB()
+    mnb_model = LogisticRegression()
     mnb_model.fit(train_data, train_labels)
     predictions = mnb_model.predict(test_data)
 
-    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_mnb_bow_v{}.pickle'.format(
+    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_bow_v{}.pickle'.format(
         run_config.model_date_to_read, run_config.model_version_to_read))
     pickle.dump(mnb_model, open(pickle_file_name, 'wb'))
     return predictions
@@ -54,8 +54,8 @@ if __name__ == '__main__':
 
     columns = ['Run', 'Accuracy', 'FPR', 'F1 Score', 'Preprocessing', 'Feature', 'Model', 'Notes']
     preprocessing_notes = "Snowball Stemmer, wordninja"
-    feature_notes = "BoW 2-gram -- Max features 5k"
-    model_notes = "MNB"
+    feature_notes = "BoW 2-gram -- Max features 10kk"
+    model_notes = "Logistic Regression"
     misc_notes = ""
     fields = [run_config.model_version_to_write, accuracy_score, fpr, f1,
               preprocessing_notes, feature_notes, model_notes, misc_notes]
@@ -65,5 +65,5 @@ if __name__ == '__main__':
 
     df_predictions = pd.DataFrame({"Predictions": y_pred, "Labels": y_val}, index=df_raw.loc[X_val.index]['review_id'])
     df_predictions.to_excel(os.path.join(config.OUTPUTS_DIR,
-                                         '{}_MNB_Ngram_v{}.xlsx'.format(run_config.model_date_to_write,
-                                                                        run_config.model_version_to_write)))
+                                         '{}_LogisticRegression_Ngram_v{}.xlsx'.format(run_config.model_date_to_write,
+                                                                                       run_config.model_version_to_write)))
