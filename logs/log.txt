@@ -3,3 +3,6 @@
 
 v0.2 -- 20154 -- Wordnet Lemmatizer
 v0.3 -- 12124 -- Snowball stemmer
+v0.4 -- 5000
+v0.5 -- 10000
+v0.6 -- 12124

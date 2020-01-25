@@ -4,3 +4,4 @@ Run,Accuracy,FPR,F1 Score,Preprocessing,Feature,Model,Notes
 0.5,0.857,0.12297962052002812,0.897196261682243,"Snowball Stemmer, wordninja",BoW 2-gram -- Max features 5k,MNB,
 0.5.1,0.872,0.10570236439499305,0.9094766619519095,"Snowball Stemmer, wordninja",BoW 2-gram -- Max features 10k,MNB,
 0.5.2,0.885,0.06703524533517623,0.9215017064846416,"Snowball Stemmer, wordninja",BoW 2-gram -- Max features 10k,Logistic Regression,
+1.0,0.877,0.03939184519695923,0.9187045604758757,"Snowball Stemmer, wordninja",Tfidf BoW -- Full Features,Logistic Regression,

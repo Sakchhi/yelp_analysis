@@ -16,14 +16,14 @@ def get_predictions(train_data, train_labels, test_data):
     mnb_model.fit(train_data, train_labels)
     predictions = mnb_model.predict(test_data)
 
-    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_bow_v{}.pickle'.format(
+    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_tfidf_v{}.pickle'.format(
         run_config.model_date_to_read, run_config.model_version_to_read))
     pickle.dump(mnb_model, open(pickle_file_name, 'wb'))
     return predictions
 
 
 if __name__ == '__main__':
-    file_to_read = (os.path.join(config.DATA_DIR, 'processed/feature_engineering/{}_bag_of_words_10k_v{}.csv'.format(
+    file_to_read = (os.path.join(config.DATA_DIR, 'processed/feature_engineering/tfidf/{}_tfidf_10k_v{}.csv'.format(
         run_config.model_date_to_read,
         run_config.model_version_to_read)))
     df_bow = pd.read_csv(file_to_read)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     columns = ['Run', 'Accuracy', 'FPR', 'F1 Score', 'Preprocessing', 'Feature', 'Model', 'Notes']
     preprocessing_notes = "Snowball Stemmer, wordninja"
-    feature_notes = "BoW 2-gram -- Max features 10kk"
+    feature_notes = "Tfidf BoW -- Full Features"
     model_notes = "Logistic Regression"
     misc_notes = ""
     fields = [run_config.model_version_to_write, accuracy_score, fpr, f1,
@@ -65,5 +65,5 @@ if __name__ == '__main__':
 
     df_predictions = pd.DataFrame({"Predictions": y_pred, "Labels": y_val}, index=df_raw.loc[X_val.index]['review_id'])
     df_predictions.to_excel(os.path.join(config.OUTPUTS_DIR,
-                                         '{}_LogisticRegression_Ngram_v{}.xlsx'.format(run_config.model_date_to_write,
+                                         '{}_LogisticRegression_Tfidf_v{}.xlsx'.format(run_config.model_date_to_write,
                                                                                        run_config.model_version_to_write)))
