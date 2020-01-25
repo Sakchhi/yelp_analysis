@@ -18,6 +18,11 @@ nlp = spacy.load('en')
 with open(os.path.join(config.UTILITIES_DIR, 'contraction_map.json')) as f:
     contraction_map = json.load(f)
 
+with open(os.path.join(config.UTILITIES_DIR, 'stop_words.txt'), 'rb') as f:
+    stop_words_list = []
+    for line in f:
+        stop_words_list.append(line.decode("utf-8").strip())
+
 
 def remove_accented_chars(text):
     pattern = r'(&#x\d\d\d\w)'
@@ -65,8 +70,9 @@ def clean_text(text):
 
         text = [w.lower() for w in text]
         text = [' '.join(wordninja.split(word)) for word in text]
-        stop = stopwords.words("english")
-        text = [w for w in text if w not in stop]
+        # stop = stopwords.words("english")
+        # text = [w for w in text if w not in stop]
+        text = [w for w in text if w not in stop_words_list]
         text = [t for t in text if len(t) > 2]
         text = [t for t in text if t != 'nan']
         text = [stemmer.stem(t) for t in text]
@@ -102,8 +108,8 @@ if __name__ == '__main__':
     df_raw = pd.read_csv(os.path.join(config.REVIEWS_EXTRACTED_ROOT, "yelp_merged_reviews_gr1000.csv"), nrows=10000)
 
     df_processed = chunk_preprocessing(df_raw.copy())
-    # for i in range(5):
-    #     print(df_processed.iloc[i].full_text_cleaned_text, end='\n\n')
+    for i in range(5):
+        print(df_processed.iloc[i].full_text_cleaned_text, end='\n\n')
     df_processed.to_csv(
         os.path.join(config.DATA_DIR, 'processed/preprocess',
                      '{}_yelp_restaurant_reviews_cleaned_gr1000_10k_v{}.csv'.format(run_config.model_date_to_write,

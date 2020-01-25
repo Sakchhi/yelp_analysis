@@ -30,7 +30,7 @@ if __name__ == '__main__':
     count_vec_model, df_bow = get_ngram(df_raw.full_text_cleaned_text.tolist())
     print(df_bow.head())
     pickle.dump(count_vec_model, open(os.path.join(config.MODEL_DIR,
-                                                   "feature_eng_model/{}_bag_of_words__10k_v{}.pickle".format(
+                                                   "feature_eng_model/{}_bag_of_words_10k_v{}.pickle".format(
                                                        run_config.model_date_to_write,
                                                        run_config.model_version_to_write)), 'wb'))
 

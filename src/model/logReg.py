@@ -16,20 +16,21 @@ def get_predictions(train_data, train_labels, test_data):
     mnb_model.fit(train_data, train_labels)
     predictions = mnb_model.predict(test_data)
 
-    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_tfidf_v{}.pickle'.format(
+    pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_tfidf_2gram_10K_v{}.pickle'.format(
         run_config.model_date_to_read, run_config.model_version_to_read))
     pickle.dump(mnb_model, open(pickle_file_name, 'wb'))
     return predictions
 
 
 if __name__ == '__main__':
-    file_to_read = (os.path.join(config.DATA_DIR, 'processed/feature_engineering/tfidf/{}_tfidf_10k_v{}.csv'.format(
-        run_config.model_date_to_read,
-        run_config.model_version_to_read)))
+    file_to_read = (
+        os.path.join(config.DATA_DIR, 'processed/feature_engineering/tfidf/{}_tfidf_2gram_10K_v{}.csv'.format(
+            run_config.model_date_to_read,
+            run_config.model_version_to_read)))
     df_bow = pd.read_csv(file_to_read)
     print(df_bow.columns.tolist())
     df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT,
-                                      "20200124_yelp_restaurant_reviews_cleaned_gr1000_10k_v0.3.csv"))  # .format(
+                                      "20200125_yelp_restaurant_reviews_cleaned_gr1000_10k_v1.2.csv"))  # .format(
     # run_config.model_date_to_read, run_config.model_version_to_read)))
     print(df_raw.columns.tolist())
     df_feature = df_bow.copy()
@@ -53,8 +54,8 @@ if __name__ == '__main__':
     print("F1 Score = {}".format(f1))
 
     columns = ['Run', 'Accuracy', 'FPR', 'F1 Score', 'Preprocessing', 'Feature', 'Model', 'Notes']
-    preprocessing_notes = "Snowball Stemmer, wordninja"
-    feature_notes = "Tfidf BoW -- Full Features"
+    preprocessing_notes = "Snowball Stemmer, wordninja, Custom stopwords"
+    feature_notes = "Tfidf 2Gram -- 10K"
     model_notes = "Logistic Regression"
     misc_notes = ""
     fields = [run_config.model_version_to_write, accuracy_score, fpr, f1,
@@ -65,5 +66,6 @@ if __name__ == '__main__':
 
     df_predictions = pd.DataFrame({"Predictions": y_pred, "Labels": y_val}, index=df_raw.loc[X_val.index]['review_id'])
     df_predictions.to_excel(os.path.join(config.OUTPUTS_DIR,
-                                         '{}_LogisticRegression_Tfidf_v{}.xlsx'.format(run_config.model_date_to_write,
-                                                                                       run_config.model_version_to_write)))
+                                         '{}_LogisticRegression_Tfidf_2gram_10K_v{}.xlsx'.format(
+                                             run_config.model_date_to_write,
+                                             run_config.model_version_to_write)))
