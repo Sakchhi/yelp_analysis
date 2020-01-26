@@ -66,7 +66,7 @@ def clean_text(text):
         # print(text)
         # pos_tags = pos_tag(text)
         # lemmatizer = WordNetLemmatizer()
-        stemmer = SnowballStemmer(language="english")
+        # stemmer = SnowballStemmer(language="english")
 
         text = [w.lower() for w in text]
         text = [' '.join(wordninja.split(word)) for word in text]
@@ -75,7 +75,7 @@ def clean_text(text):
         text = [w for w in text if w not in stop_words_list]
         text = [t for t in text if len(t) > 2]
         text = [t for t in text if t != 'nan']
-        text = [stemmer.stem(t) for t in text]
+        # text = [stemmer.stem(t) for t in text]
 
         # all_words = set(words.words())
         # text = [t for t in text if t in all_words]

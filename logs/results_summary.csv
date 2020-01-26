@@ -8,3 +8,4 @@ Run,Accuracy,FPR,F1 Score,Preprocessing,Feature,Model,Notes
 1.1,0.878,0.03248099516240498,0.9198423127463863,"Snowball Stemmer, wordninja",Tfidf 2Gram -- 10K,Logistic Regression,
 1.2,0.887,0.027643400138217002,0.9256578947368421,"Snowball Stemmer, wordninja, Custom stopwords",Tfidf 2Gram -- 10K,Logistic Regression,
 1.3,0.733,0.07878369039391846,0.8331250000000001,"Snowball Stemmer, wordninja, Custom stopwords",Tfidf 2Gram -- 10K,TextBlob baseline,
+2.0,0.7655,0.08914996544574982,0.8489533011272142,"NO STEMMER, wordninja, Custom stopwords",Pretrained Spacy Word2Vec -- 96 avg,Logistic Regression,

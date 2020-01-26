@@ -15,18 +15,10 @@ def get_predictions(test_data):
     polarity = [TextBlob(i).sentiment.polarity for i in test_data]
     predictions = [1 if n > 0 else 0 for n in polarity]
 
-    # pickle_file_name = os.path.join(config.MODEL_DIR, 'classifier_model/{}_logreg_tfidf_2gram_10K_v{}.pickle'.format(
-    #     run_config.model_date_to_read, run_config.model_version_to_read))
-    # pickle.dump(mnb_model, open(pickle_file_name, 'wb'))
     return predictions
 
 
 if __name__ == '__main__':
-    # file_to_read = (os.path.join(config.DATA_DIR, 'processed/feature_engineering/tfidf/{}_tfidf_2gram_10K_v{}.csv'.format(
-    #     run_config.model_date_to_read,
-    #     run_config.model_version_to_read)))
-    # df_bow = pd.read_csv(file_to_read)
-    # print(df_bow.columns.tolist())
     df_raw = pd.read_csv(os.path.join(config.CLEANED_REVIEWS_ROOT,
                                       "20200125_yelp_restaurant_reviews_cleaned_gr1000_10k_v1.2.csv"))  # .format(
     # run_config.model_date_to_read, run_config.model_version_to_read)))
